@@ -116,8 +116,8 @@ func (h *Handlers) LoginHandler(c *gin.Context) {
 		Email:    fmt.Sprintf("%s@%s", strings.ToLower(login.Username), h.Config.Domain),
 		Provider: "username",
 	})
-
-	// Return logged in
+	//11
+	/// Return logged in
 	c.JSON(200, gin.H{
 		"status":      200,
 		"message":     "Logged in",
@@ -185,6 +185,16 @@ func (h *Handlers) TOTPHandler(c *gin.Context) {
 	})
 }
 
+func (h *Handlers) LogoutHandler(c *gin.Context) {
+	log.Debug().Msg("Cleaning up redirect cookie")
+
+	h.Auth.DeleteSessionCookie(c)
+
+	c.JSON(200, gin.H{
+		"status":  200,
+		"message": "Logged out",
+	})
+}
 func (h *Handlers) LogoutHandler(c *gin.Context) {
 	log.Debug().Msg("Cleaning up redirect cookie")
 
